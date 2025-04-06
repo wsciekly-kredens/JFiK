@@ -11,8 +11,10 @@ entry:
   %"a.1" = load i32, i32* %"a"
   %".4" = bitcast [4 x i8]* @"fmt_int" to i8*
   %".5" = call i32 (i8*, ...) @"printf"(i8* %".4", i32 %"a.1")
-  %".6" = bitcast [4 x i8]* @"fmt_float" to i8*
-  %".7" = call i32 (i8*, ...) @"printf"(i8* %".6", double 0x4014666666666666)
+  %".6" = sitofp i32 3 to double
+  %".7" = fmul double 0x4014666666666666, %".6"
+  %".8" = bitcast [4 x i8]* @"fmt_float" to i8*
+  %".9" = call i32 (i8*, ...) @"printf"(i8* %".8", double %".7")
   ret void
 }
 

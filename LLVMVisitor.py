@@ -63,6 +63,15 @@ class LLVMVisitor(langVisitor):
     def visitAddSub(self, ctx):
         left = self.visit(ctx.expr(0))
         right = self.visit(ctx.expr(1))
+
+        # Jeśli left i right mają różne typy, musimy je skonwertować
+        if left.type != right.type:
+            # Jeśli jeden jest float, a drugi int, konwertujemy oba na float
+            if left.type == ir.IntType(32) and right.type == ir.DoubleType():
+                left = self.builder.sitofp(left, ir.DoubleType())
+            elif left.type == ir.DoubleType() and right.type == ir.IntType(32):
+                right = self.builder.sitofp(right, ir.DoubleType())
+
         if ctx.ADD():
             return self.builder.fadd(left, right) if left.type == ir.DoubleType() else self.builder.add(left, right)
         else:
@@ -71,6 +80,15 @@ class LLVMVisitor(langVisitor):
     def visitMulDiv(self, ctx):
         left = self.visit(ctx.expr(0))
         right = self.visit(ctx.expr(1))
+
+        # Konwertujemy typy w przypadku różnych typów operandów
+        if left.type != right.type:
+            # Jeśli jeden jest float, a drugi int, konwertujemy oba na float
+            if left.type == ir.IntType(32) and right.type == ir.DoubleType():
+                left = self.builder.sitofp(left, ir.DoubleType())
+            elif left.type == ir.DoubleType() and right.type == ir.IntType(32):
+                right = self.builder.sitofp(right, ir.DoubleType())
+
         if ctx.MULT():
             return self.builder.fmul(left, right) if left.type == ir.DoubleType() else self.builder.mul(left, right)
         else:
