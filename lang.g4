@@ -6,6 +6,7 @@ stat:   WRITE expr        #write
     |   ID '=' expr       #assign
     |   READ ID           #read
     |   expr              #exprStat
+    |   ARRAY ID '[' (INT)? ']' ('=' '{' expr (',' expr)* '}' )?  #array
     ;
 
 expr:   expr (MULT | DIVIDE) expr    #MulDiv
@@ -16,6 +17,8 @@ expr:   expr (MULT | DIVIDE) expr    #MulDiv
     |   INT                          #intExpr
     |   FLOAT                        #floatExpr
     |   ID                           #varExpr
+    |   STRING                       #stringExpr
+    |   ID ('[' INT ']')?            #arrayElem
     ;
 
 num: INT
@@ -49,10 +52,12 @@ artoperation: sum | diff | prod | quotient;
 
 WRITE:  'bark';
 READ:   'listen';
+ARRAY:  'pack';
 
 ID:   ('a'..'z'|'A'..'Z')+;
 INT:  '0'..'9'+;
 FLOAT: '0'..'9'+ '.' '0'..'9'+;
+STRING :  '"' ( ~('\\'|'"') )* '"';
 
 TOINT: '(int)';
 TOFLOAT: '(float)';
