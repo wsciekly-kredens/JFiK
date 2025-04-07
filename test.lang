@@ -1,5 +1,13 @@
 1
 a = 5.1 + 1
 bark a
+bark 5.1 * 3
+pack Dognames[] = {"Thommas Schelby", "Pies", "Dumpling"}
+a = "Azor"
+getit b
+getit Dognames
+bark b
+bark Dognames[2]
+
 listen g
 bark g
