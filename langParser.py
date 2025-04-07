@@ -141,12 +141,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitProg" ):
                 listener.exitProg(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitProg" ):
-                return visitor.visitProg(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -231,12 +225,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitRead" ):
                 listener.exitRead(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRead" ):
-                return visitor.visitRead(self)
-            else:
-                return visitor.visitChildren(self)
-
 
     class ExprStatContext(StatContext):
 
@@ -255,12 +243,6 @@ class langParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitExprStat" ):
                 listener.exitExprStat(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExprStat" ):
-                return visitor.visitExprStat(self)
-            else:
-                return visitor.visitChildren(self)
 
 
     class WriteContext(StatContext):
@@ -283,12 +265,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitWrite" ):
                 listener.exitWrite(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitWrite" ):
-                return visitor.visitWrite(self)
-            else:
-                return visitor.visitChildren(self)
-
 
     class AssignContext(StatContext):
 
@@ -309,12 +285,6 @@ class langParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAssign" ):
                 listener.exitAssign(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAssign" ):
-                return visitor.visitAssign(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -405,12 +375,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitFloatExpr" ):
                 listener.exitFloatExpr(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFloatExpr" ):
-                return visitor.visitFloatExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
 
     class VarExprContext(ExprContext):
 
@@ -429,12 +393,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitVarExpr" ):
                 listener.exitVarExpr(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitVarExpr" ):
-                return visitor.visitVarExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
 
     class IntExprContext(ExprContext):
 
@@ -452,12 +410,6 @@ class langParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitIntExpr" ):
                 listener.exitIntExpr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIntExpr" ):
-                return visitor.visitIntExpr(self)
-            else:
-                return visitor.visitChildren(self)
 
 
     class CastToFloatContext(ExprContext):
@@ -479,12 +431,6 @@ class langParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitCastToFloat" ):
                 listener.exitCastToFloat(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCastToFloat" ):
-                return visitor.visitCastToFloat(self)
-            else:
-                return visitor.visitChildren(self)
 
 
     class MulDivContext(ExprContext):
@@ -512,12 +458,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitMulDiv" ):
                 listener.exitMulDiv(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMulDiv" ):
-                return visitor.visitMulDiv(self)
-            else:
-                return visitor.visitChildren(self)
-
 
     class AddSubContext(ExprContext):
 
@@ -544,12 +484,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitAddSub" ):
                 listener.exitAddSub(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAddSub" ):
-                return visitor.visitAddSub(self)
-            else:
-                return visitor.visitChildren(self)
-
 
     class CastToIntContext(ExprContext):
 
@@ -571,12 +505,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitCastToInt" ):
                 listener.exitCastToInt(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCastToInt" ):
-                return visitor.visitCastToInt(self)
-            else:
-                return visitor.visitChildren(self)
-
 
     class ParenExprContext(ExprContext):
 
@@ -595,12 +523,6 @@ class langParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitParenExpr" ):
                 listener.exitParenExpr(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitParenExpr" ):
-                return visitor.visitParenExpr(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -763,12 +685,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitNum" ):
                 listener.exitNum(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitNum" ):
-                return visitor.visitNum(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -826,12 +742,6 @@ class langParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSum" ):
                 listener.exitSum(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSum" ):
-                return visitor.visitSum(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -912,12 +822,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitDiff" ):
                 listener.exitDiff(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDiff" ):
-                return visitor.visitDiff(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -997,12 +901,6 @@ class langParser ( Parser ):
             if hasattr( listener, "exitProd" ):
                 listener.exitProd(self)
 
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitProd" ):
-                return visitor.visitProd(self)
-            else:
-                return visitor.visitChildren(self)
-
 
 
 
@@ -1081,12 +979,6 @@ class langParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitQuotient" ):
                 listener.exitQuotient(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitQuotient" ):
-                return visitor.visitQuotient(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 
@@ -1168,12 +1060,6 @@ class langParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArtoperation" ):
                 listener.exitArtoperation(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitArtoperation" ):
-                return visitor.visitArtoperation(self)
-            else:
-                return visitor.visitChildren(self)
 
 
 

@@ -17,6 +17,13 @@ class LLVMVisitor(langVisitor):
         self._fmt_int = self._create_global_fmt_str("%d\n\0", "fmt_int")
         self._fmt_float = self._create_global_fmt_str("%f\n\0", "fmt_float")
 
+        scanf_ty = ir.FunctionType(ir.IntType(32), [voidptr_ty], var_arg=True)
+        self.scanf = ir.Function(self.module, scanf_ty, name="scanf")
+
+        self._fmt_scanf_int = self._create_global_fmt_str("%d\0", "fmt_scanf_int")
+        self._fmt_scanf_float = self._create_global_fmt_str("%lf\0", "fmt_scanf_float")
+
+
     def _create_global_fmt_str(self, text, name):
         arr_type = ir.ArrayType(ir.IntType(8), len(text))
         global_var = ir.GlobalVariable(self.module, arr_type, name=name)
@@ -48,6 +55,25 @@ class LLVMVisitor(langVisitor):
         else:
             raise Exception(f"Nieobsługiwany typ dla 'bark': {val.type}")
 
+    def visitRead(self, ctx):
+        var_name = ctx.ID().getText()
+
+        # Domyślnie alokuj int, jeśli zmienna nie istnieje
+        ptr = self.variables.get(var_name)
+        if ptr is None:
+            ptr = self.builder.alloca(ir.IntType(32), name=var_name)
+            self.variables[var_name] = ptr
+
+        var_type = ptr.type.pointee
+
+        if var_type == ir.IntType(32):
+            fmt_ptr = self.builder.bitcast(self._fmt_scanf_int, ir.IntType(8).as_pointer())
+        elif var_type == ir.DoubleType():
+            fmt_ptr = self.builder.bitcast(self._fmt_scanf_float, ir.IntType(8).as_pointer())
+        else:
+            raise Exception(f"Nieobsługiwany typ zmiennej przy 'listen': {var_type}")
+
+        self.builder.call(self.scanf, [fmt_ptr, ptr])
 
     def visitVarExpr(self, ctx):
         var_name = ctx.ID().getText()
@@ -64,9 +90,7 @@ class LLVMVisitor(langVisitor):
         left = self.visit(ctx.expr(0))
         right = self.visit(ctx.expr(1))
 
-        # Jeśli left i right mają różne typy, musimy je skonwertować
         if left.type != right.type:
-            # Jeśli jeden jest float, a drugi int, konwertujemy oba na float
             if left.type == ir.IntType(32) and right.type == ir.DoubleType():
                 left = self.builder.sitofp(left, ir.DoubleType())
             elif left.type == ir.DoubleType() and right.type == ir.IntType(32):
@@ -81,9 +105,7 @@ class LLVMVisitor(langVisitor):
         left = self.visit(ctx.expr(0))
         right = self.visit(ctx.expr(1))
 
-        # Konwertujemy typy w przypadku różnych typów operandów
         if left.type != right.type:
-            # Jeśli jeden jest float, a drugi int, konwertujemy oba na float
             if left.type == ir.IntType(32) and right.type == ir.DoubleType():
                 left = self.builder.sitofp(left, ir.DoubleType())
             elif left.type == ir.DoubleType() and right.type == ir.IntType(32):
