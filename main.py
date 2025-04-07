@@ -26,7 +26,6 @@ def compile_lang_code(source_code):
         print("Wystąpiły błędy leksykalne lub składniowe. Kompilacja przerwana.")
         return
 
-    # Brak błędów — kontynuujemy
     visitor = LLVMVisitor()
     module = visitor.visit(tree)
     print(module)

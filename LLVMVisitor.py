@@ -87,8 +87,8 @@ class LLVMVisitor(langVisitor):
         return ir.Constant(ir.DoubleType(), float(ctx.FLOAT().getText()))
 
     def visitAddSub(self, ctx):
-        left = self.visit(ctx.expr(0))
-        right = self.visit(ctx.expr(1))
+        left = self.visit(ctx.value())
+        right = self.visit(ctx.expr())
 
         if left.type != right.type:
             if left.type == ir.IntType(32) and right.type == ir.DoubleType():
@@ -102,8 +102,8 @@ class LLVMVisitor(langVisitor):
             return self.builder.fsub(left, right) if left.type == ir.DoubleType() else self.builder.sub(left, right)
 
     def visitMulDiv(self, ctx):
-        left = self.visit(ctx.expr(0))
-        right = self.visit(ctx.expr(1))
+        left = self.visit(ctx.value())
+        right = self.visit(ctx.expr())
 
         if left.type != right.type:
             if left.type == ir.IntType(32) and right.type == ir.DoubleType():
@@ -120,9 +120,9 @@ class LLVMVisitor(langVisitor):
         return self.visit(ctx.expr())
 
     def visitCastToInt(self, ctx):
-        val = self.visit(ctx.expr())
+        val = self.visit(ctx.value())
         return self.builder.fptosi(val, ir.IntType(32))
 
     def visitCastToFloat(self, ctx):
-        val = self.visit(ctx.expr())
+        val = self.visit(ctx.value())
         return self.builder.sitofp(val, ir.DoubleType())

@@ -34,26 +34,6 @@ class langVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by langParser#floatExpr.
-    def visitFloatExpr(self, ctx:langParser.FloatExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by langParser#varExpr.
-    def visitVarExpr(self, ctx:langParser.VarExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by langParser#intExpr.
-    def visitIntExpr(self, ctx:langParser.IntExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by langParser#CastToFloat.
-    def visitCastToFloat(self, ctx:langParser.CastToFloatContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by langParser#MulDiv.
     def visitMulDiv(self, ctx:langParser.MulDivContext):
         return self.visitChildren(ctx)
@@ -64,43 +44,38 @@ class langVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by langParser#valExpr.
+    def visitValExpr(self, ctx:langParser.ValExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by langParser#intExpr.
+    def visitIntExpr(self, ctx:langParser.IntExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by langParser#floatExpr.
+    def visitFloatExpr(self, ctx:langParser.FloatExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by langParser#varExpr.
+    def visitVarExpr(self, ctx:langParser.VarExprContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by langParser#CastToInt.
     def visitCastToInt(self, ctx:langParser.CastToIntContext):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by langParser#CastToFloat.
+    def visitCastToFloat(self, ctx:langParser.CastToFloatContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by langParser#ParenExpr.
     def visitParenExpr(self, ctx:langParser.ParenExprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by langParser#num.
-    def visitNum(self, ctx:langParser.NumContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by langParser#sum.
-    def visitSum(self, ctx:langParser.SumContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by langParser#diff.
-    def visitDiff(self, ctx:langParser.DiffContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by langParser#prod.
-    def visitProd(self, ctx:langParser.ProdContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by langParser#quotient.
-    def visitQuotient(self, ctx:langParser.QuotientContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by langParser#artoperation.
-    def visitArtoperation(self, ctx:langParser.ArtoperationContext):
         return self.visitChildren(ctx)
 
 
