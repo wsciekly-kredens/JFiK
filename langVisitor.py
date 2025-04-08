@@ -34,6 +34,11 @@ class langVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by langParser#array.
+    def visitArray(self, ctx:langParser.ArrayContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by langParser#MulDiv.
     def visitMulDiv(self, ctx:langParser.MulDivContext):
         return self.visitChildren(ctx)
@@ -46,6 +51,16 @@ class langVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by langParser#valExpr.
     def visitValExpr(self, ctx:langParser.ValExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by langParser#stringExpr.
+    def visitStringExpr(self, ctx:langParser.StringExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by langParser#arrayElem.
+    def visitArrayElem(self, ctx:langParser.ArrayElemContext):
         return self.visitChildren(ctx)
 
 
