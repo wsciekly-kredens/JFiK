@@ -1,6 +1,6 @@
 grammar lang;
 
-prog: stat? (NEWLINE stat)* NEWLINE?;
+prog: ( stat? NEWLINE )*;
 
 stat:   WRITE expr        #write
     |   ID '=' expr       #assign
@@ -9,46 +9,22 @@ stat:   WRITE expr        #write
     |   ARRAY ID '[' (INT)? ']' ('=' '{' expr (',' expr)* '}' )?  #array
     ;
 
-expr:   expr (MULT | DIVIDE) expr    #MulDiv
-    |   expr (ADD | SUBSTRACT) expr  #AddSub
-    |   '(' expr ')'                 #ParenExpr
-    |   TOINT expr                   #CastToInt
-    |   TOFLOAT expr                 #CastToFloat
-    |   INT                          #intExpr
-    |   FLOAT                        #floatExpr
-    |   ID                           #varExpr
+expr:   value (MULT | DIVIDE) expr    #MulDiv
+    |   value (ADD | SUBSTRACT) expr  #AddSub
+    |   value                        #valExpr
     |   STRING                       #stringExpr
     |   ID ('[' INT ']')?            #arrayElem
     ;
 
-num: INT
-   | FLOAT
-   | TOINT
-   | TOFLOAT
-   ;
+value:  INT                          #intExpr
+    |   FLOAT                        #floatExpr
+    |   ID                           #varExpr
+    |   TOINT value                   #CastToInt
+    |   TOFLOAT value                 #CastToFloat
+    |   LP expr RP                   #ParenExpr
 
-sum: num
-    | num ADD num
-    | num ADD artoperation
     ;
 
-diff: num
-    | num SUBSTRACT num
-    | num SUBSTRACT artoperation
-    ;
-
-prod: num
-    | num MULT num
-    | num MULT artoperation
-    ;
-
-quotient: num
-    | num DIVIDE num
-    | num DIVIDE artoperation
-    ;
-
-
-artoperation: sum | diff | prod | quotient;
 
 WRITE:  'bark';
 READ:   'listen';
@@ -62,6 +38,8 @@ STRING :  '"' ( ~('\\'|'"') )* '"';
 TOINT: '(int)';
 TOFLOAT: '(float)';
 
+LP: '(';
+RP: ')';
 ADD: '+';
 SUBSTRACT: '-';
 MULT: '*';

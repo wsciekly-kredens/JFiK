@@ -53,21 +53,39 @@ class langListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by langParser#array.
-    def enterArray(self, ctx:langParser.ArrayContext):
+    # Enter a parse tree produced by langParser#MulDiv.
+    def enterMulDiv(self, ctx:langParser.MulDivContext):
         pass
 
-    # Exit a parse tree produced by langParser#array.
-    def exitArray(self, ctx:langParser.ArrayContext):
+    # Exit a parse tree produced by langParser#MulDiv.
+    def exitMulDiv(self, ctx:langParser.MulDivContext):
         pass
 
 
-    # Enter a parse tree produced by langParser#stringExpr.
-    def enterStringExpr(self, ctx:langParser.StringExprContext):
+    # Enter a parse tree produced by langParser#AddSub.
+    def enterAddSub(self, ctx:langParser.AddSubContext):
         pass
 
-    # Exit a parse tree produced by langParser#stringExpr.
-    def exitStringExpr(self, ctx:langParser.StringExprContext):
+    # Exit a parse tree produced by langParser#AddSub.
+    def exitAddSub(self, ctx:langParser.AddSubContext):
+        pass
+
+
+    # Enter a parse tree produced by langParser#valExpr.
+    def enterValExpr(self, ctx:langParser.ValExprContext):
+        pass
+
+    # Exit a parse tree produced by langParser#valExpr.
+    def exitValExpr(self, ctx:langParser.ValExprContext):
+        pass
+
+
+    # Enter a parse tree produced by langParser#intExpr.
+    def enterIntExpr(self, ctx:langParser.IntExprContext):
+        pass
+
+    # Exit a parse tree produced by langParser#intExpr.
+    def exitIntExpr(self, ctx:langParser.IntExprContext):
         pass
 
 
@@ -89,21 +107,12 @@ class langListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by langParser#arrayElem.
-    def enterArrayElem(self, ctx:langParser.ArrayElemContext):
+    # Enter a parse tree produced by langParser#CastToInt.
+    def enterCastToInt(self, ctx:langParser.CastToIntContext):
         pass
 
-    # Exit a parse tree produced by langParser#arrayElem.
-    def exitArrayElem(self, ctx:langParser.ArrayElemContext):
-        pass
-
-
-    # Enter a parse tree produced by langParser#intExpr.
-    def enterIntExpr(self, ctx:langParser.IntExprContext):
-        pass
-
-    # Exit a parse tree produced by langParser#intExpr.
-    def exitIntExpr(self, ctx:langParser.IntExprContext):
+    # Exit a parse tree produced by langParser#CastToInt.
+    def exitCastToInt(self, ctx:langParser.CastToIntContext):
         pass
 
 
@@ -116,93 +125,12 @@ class langListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by langParser#MulDiv.
-    def enterMulDiv(self, ctx:langParser.MulDivContext):
-        pass
-
-    # Exit a parse tree produced by langParser#MulDiv.
-    def exitMulDiv(self, ctx:langParser.MulDivContext):
-        pass
-
-
-    # Enter a parse tree produced by langParser#AddSub.
-    def enterAddSub(self, ctx:langParser.AddSubContext):
-        pass
-
-    # Exit a parse tree produced by langParser#AddSub.
-    def exitAddSub(self, ctx:langParser.AddSubContext):
-        pass
-
-
-    # Enter a parse tree produced by langParser#CastToInt.
-    def enterCastToInt(self, ctx:langParser.CastToIntContext):
-        pass
-
-    # Exit a parse tree produced by langParser#CastToInt.
-    def exitCastToInt(self, ctx:langParser.CastToIntContext):
-        pass
-
-
     # Enter a parse tree produced by langParser#ParenExpr.
     def enterParenExpr(self, ctx:langParser.ParenExprContext):
         pass
 
     # Exit a parse tree produced by langParser#ParenExpr.
     def exitParenExpr(self, ctx:langParser.ParenExprContext):
-        pass
-
-
-    # Enter a parse tree produced by langParser#num.
-    def enterNum(self, ctx:langParser.NumContext):
-        pass
-
-    # Exit a parse tree produced by langParser#num.
-    def exitNum(self, ctx:langParser.NumContext):
-        pass
-
-
-    # Enter a parse tree produced by langParser#sum.
-    def enterSum(self, ctx:langParser.SumContext):
-        pass
-
-    # Exit a parse tree produced by langParser#sum.
-    def exitSum(self, ctx:langParser.SumContext):
-        pass
-
-
-    # Enter a parse tree produced by langParser#diff.
-    def enterDiff(self, ctx:langParser.DiffContext):
-        pass
-
-    # Exit a parse tree produced by langParser#diff.
-    def exitDiff(self, ctx:langParser.DiffContext):
-        pass
-
-
-    # Enter a parse tree produced by langParser#prod.
-    def enterProd(self, ctx:langParser.ProdContext):
-        pass
-
-    # Exit a parse tree produced by langParser#prod.
-    def exitProd(self, ctx:langParser.ProdContext):
-        pass
-
-
-    # Enter a parse tree produced by langParser#quotient.
-    def enterQuotient(self, ctx:langParser.QuotientContext):
-        pass
-
-    # Exit a parse tree produced by langParser#quotient.
-    def exitQuotient(self, ctx:langParser.QuotientContext):
-        pass
-
-
-    # Enter a parse tree produced by langParser#artoperation.
-    def enterArtoperation(self, ctx:langParser.ArtoperationContext):
-        pass
-
-    # Exit a parse tree produced by langParser#artoperation.
-    def exitArtoperation(self, ctx:langParser.ArtoperationContext):
         pass
 
 
