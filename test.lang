@@ -1,13 +1,9 @@
-1
-a = 5.1 + 1
+a = 5 + 3
 bark a
 bark 5.1 * 3
 pack Dognames[] = {"Thommas Schelby", "Pies", "Dumpling"}
-a = "Azor"
-getit b
-getit Dognames
+b = "Azor"
 bark b
 bark Dognames[2]
-
-listen g
-bark g
+pack Age[2] = {1, 2}
+bark Age[1]

@@ -53,6 +53,15 @@ class langListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by langParser#array.
+    def enterArray(self, ctx:langParser.ArrayContext):
+        pass
+
+    # Exit a parse tree produced by langParser#array.
+    def exitArray(self, ctx:langParser.ArrayContext):
+        pass
+
+
     # Enter a parse tree produced by langParser#MulDiv.
     def enterMulDiv(self, ctx:langParser.MulDivContext):
         pass
@@ -77,6 +86,24 @@ class langListener(ParseTreeListener):
 
     # Exit a parse tree produced by langParser#valExpr.
     def exitValExpr(self, ctx:langParser.ValExprContext):
+        pass
+
+
+    # Enter a parse tree produced by langParser#stringExpr.
+    def enterStringExpr(self, ctx:langParser.StringExprContext):
+        pass
+
+    # Exit a parse tree produced by langParser#stringExpr.
+    def exitStringExpr(self, ctx:langParser.StringExprContext):
+        pass
+
+
+    # Enter a parse tree produced by langParser#arrayElem.
+    def enterArrayElem(self, ctx:langParser.ArrayElemContext):
+        pass
+
+    # Exit a parse tree produced by langParser#arrayElem.
+    def exitArrayElem(self, ctx:langParser.ArrayElemContext):
         pass
 
 
