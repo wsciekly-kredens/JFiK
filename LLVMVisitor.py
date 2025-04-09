@@ -145,11 +145,14 @@ class LLVMVisitor(langVisitor):
     def visitArray(self, ctx):
         array_name = ctx.ID().getText()
         exprs = ctx.expr()
+        
+        if not exprs:
+            raise Exception(f"Tablica '{array_name}' nie zawiera żadnych elementów.")
 
         elements = []
         element_type = None
 
-        for expr in exprs:
+        for i, expr in enumerate(exprs):
             val = self.visit(expr)
 
             if isinstance(val.type, ir.PointerType) and val.type.pointee == ir.IntType(8):
@@ -162,11 +165,28 @@ class LLVMVisitor(langVisitor):
                 global_str.initializer = ir.Constant(arr_type, bytearray(text.encode("utf8")))
 
                 gep = global_str.gep([ir.Constant(ir.IntType(32), 0), ir.Constant(ir.IntType(32), 0)])
-                elements.append(gep)
-                element_type = gep.type
-            else:
-                elements.append(val)
+                val = gep
+
+            if element_type is None:
                 element_type = val.type
+            else:
+                if val.type != element_type:
+                    raise Exception(
+                        f"Typ elementu nr {i+1} w tablicy '{array_name}' ({val.type}) "
+                        f"nie pasuje do pierwszego typu ({element_type})."
+                    )
+
+            elements.append(val)
+
+        allowed_types = (
+            ir.IntType(32),
+            ir.DoubleType(),
+            ir.IntType(8).as_pointer(),
+        )
+        if not isinstance(element_type, type) and element_type not in allowed_types:
+            raise Exception(
+                f"Typ elementów tablicy '{array_name}' ({element_type}) nie jest obsługiwany."
+            )
 
         array_type = ir.ArrayType(element_type, len(elements))
         initializer = ir.Constant(array_type, elements)
@@ -179,11 +199,27 @@ class LLVMVisitor(langVisitor):
 
     def visitArrayElem(self, ctx):
         array_name = ctx.ID().getText()
-        index = int(ctx.INT().getText())
-        array_ptr = self.variables.get(array_name)
+        index_raw = ctx.INT().getText()
 
-        if not array_ptr:
-            raise Exception(f"Nie odnaleziono tablicy {array_name}")
+        try:
+            index = int(index_raw)
+        except ValueError:
+            raise Exception(f"Indeks tablicy '{array_name}' nie jest liczbą całkowitą: '{index_raw}'")
+
+        array_ptr = self.variables.get(array_name)
+        if array_ptr is None:
+            raise Exception(f"Nie odnaleziono tablicy '{array_name}'")
+
+        if not isinstance(array_ptr.type.pointee, ir.types.ArrayType):
+            raise Exception(f"'{array_name}' nie jest tablicą (ma typ {array_ptr.type})")
+
+        array_type = array_ptr.type.pointee
+        array_length = array_type.count
+
+        if index < 0 or index >= array_length:
+            raise Exception(
+                f"Indeks {index} poza zakresem tablicy '{array_name}' (rozmiar: {array_length})"
+            )
 
         array_bitcast = self.builder.bitcast(array_ptr, array_ptr.type.pointee.as_pointer())
         element_ptr = self.builder.gep(
