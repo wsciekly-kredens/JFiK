@@ -1,21 +1,21 @@
 import sys
 from antlr4 import *
-from langLexer import langLexer
-from langParser import langParser
+from pawtonLexer import pawtonLexer
+from pawtonParser import pawtonParser
 from LLVMVisitor import LLVMVisitor
 from langErrorListener import LangErrorListener
 
 def compile_lang_code(source_code):
     input_stream = InputStream(source_code)
 
-    lexer = langLexer(input_stream)
+    lexer = pawtonLexer(input_stream)
     lexer.removeErrorListeners()
     lexer_error_listener = LangErrorListener()
     lexer.addErrorListener(lexer_error_listener)
 
     token_stream = CommonTokenStream(lexer)
 
-    parser = langParser(token_stream)
+    parser = pawtonParser(token_stream)
     parser.removeErrorListeners()
     parser_error_listener = LangErrorListener()
     parser.addErrorListener(parser_error_listener)
@@ -28,7 +28,9 @@ def compile_lang_code(source_code):
 
     visitor = LLVMVisitor()
     module = visitor.visit(tree)
-    print(module)
+    with open("output.ll", "wb") as f:
+        f.write(str(module).encode("utf-8"))
+        f.close()
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

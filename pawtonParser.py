@@ -1,4 +1,4 @@
-# Generated from lang.g4 by ANTLR 4.13.2
+# Generated from pawton.g4 by ANTLR 4.13.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -40,9 +40,9 @@ def serializedATN():
         64,77
     ]
 
-class langParser ( Parser ):
+class pawtonParser ( Parser ):
 
-    grammarFileName = "lang.g4"
+    grammarFileName = "pawton.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -111,19 +111,19 @@ class langParser ( Parser ):
 
         def NEWLINE(self, i:int=None):
             if i is None:
-                return self.getTokens(langParser.NEWLINE)
+                return self.getTokens(pawtonParser.NEWLINE)
             else:
-                return self.getToken(langParser.NEWLINE, i)
+                return self.getToken(pawtonParser.NEWLINE, i)
 
         def stat(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(langParser.StatContext)
+                return self.getTypedRuleContexts(pawtonParser.StatContext)
             else:
-                return self.getTypedRuleContext(langParser.StatContext,i)
+                return self.getTypedRuleContext(pawtonParser.StatContext,i)
 
 
         def getRuleIndex(self):
-            return langParser.RULE_prog
+            return pawtonParser.RULE_prog
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterProg" ):
@@ -144,7 +144,7 @@ class langParser ( Parser ):
 
     def prog(self):
 
-        localctx = langParser.ProgContext(self, self._ctx, self.state)
+        localctx = pawtonParser.ProgContext(self, self._ctx, self.state)
         self.enterRule(localctx, 0, self.RULE_prog)
         self._la = 0 # Token type
         try:
@@ -162,7 +162,7 @@ class langParser ( Parser ):
 
 
                 self.state = 11
-                self.match(langParser.NEWLINE)
+                self.match(pawtonParser.NEWLINE)
                 self.state = 16
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -185,7 +185,7 @@ class langParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return langParser.RULE_stat
+            return pawtonParser.RULE_stat
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -195,14 +195,14 @@ class langParser ( Parser ):
 
     class ReadContext(StatContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.StatContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.StatContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def READ(self):
-            return self.getToken(langParser.READ, 0)
+            return self.getToken(pawtonParser.READ, 0)
         def ID(self):
-            return self.getToken(langParser.ID, 0)
+            return self.getToken(pawtonParser.ID, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterRead" ):
@@ -221,21 +221,21 @@ class langParser ( Parser ):
 
     class ArrayContext(StatContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.StatContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.StatContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ARRAY(self):
-            return self.getToken(langParser.ARRAY, 0)
+            return self.getToken(pawtonParser.ARRAY, 0)
         def ID(self):
-            return self.getToken(langParser.ID, 0)
+            return self.getToken(pawtonParser.ID, 0)
         def INT(self):
-            return self.getToken(langParser.INT, 0)
+            return self.getToken(pawtonParser.INT, 0)
         def expr(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(langParser.ExprContext)
+                return self.getTypedRuleContexts(pawtonParser.ExprContext)
             else:
-                return self.getTypedRuleContext(langParser.ExprContext,i)
+                return self.getTypedRuleContext(pawtonParser.ExprContext,i)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -255,12 +255,12 @@ class langParser ( Parser ):
 
     class ExprStatContext(StatContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.StatContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.StatContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def expr(self):
-            return self.getTypedRuleContext(langParser.ExprContext,0)
+            return self.getTypedRuleContext(pawtonParser.ExprContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -280,14 +280,14 @@ class langParser ( Parser ):
 
     class WriteContext(StatContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.StatContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.StatContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def WRITE(self):
-            return self.getToken(langParser.WRITE, 0)
+            return self.getToken(pawtonParser.WRITE, 0)
         def expr(self):
-            return self.getTypedRuleContext(langParser.ExprContext,0)
+            return self.getTypedRuleContext(pawtonParser.ExprContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -307,14 +307,14 @@ class langParser ( Parser ):
 
     class AssignContext(StatContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.StatContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.StatContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ID(self):
-            return self.getToken(langParser.ID, 0)
+            return self.getToken(pawtonParser.ID, 0)
         def expr(self):
-            return self.getTypedRuleContext(langParser.ExprContext,0)
+            return self.getTypedRuleContext(pawtonParser.ExprContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -335,7 +335,7 @@ class langParser ( Parser ):
 
     def stat(self):
 
-        localctx = langParser.StatContext(self, self._ctx, self.state)
+        localctx = pawtonParser.StatContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_stat)
         self._la = 0 # Token type
         try:
@@ -343,68 +343,68 @@ class langParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
             if la_ == 1:
-                localctx = langParser.WriteContext(self, localctx)
+                localctx = pawtonParser.WriteContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 17
-                self.match(langParser.WRITE)
+                self.match(pawtonParser.WRITE)
                 self.state = 18
                 self.expr()
                 pass
 
             elif la_ == 2:
-                localctx = langParser.AssignContext(self, localctx)
+                localctx = pawtonParser.AssignContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 19
-                self.match(langParser.ID)
+                self.match(pawtonParser.ID)
                 self.state = 20
-                self.match(langParser.T__0)
+                self.match(pawtonParser.T__0)
                 self.state = 21
                 self.expr()
                 pass
 
             elif la_ == 3:
-                localctx = langParser.ReadContext(self, localctx)
+                localctx = pawtonParser.ReadContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 22
-                self.match(langParser.READ)
+                self.match(pawtonParser.READ)
                 self.state = 23
-                self.match(langParser.ID)
+                self.match(pawtonParser.ID)
                 pass
 
             elif la_ == 4:
-                localctx = langParser.ExprStatContext(self, localctx)
+                localctx = pawtonParser.ExprStatContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 24
                 self.expr()
                 pass
 
             elif la_ == 5:
-                localctx = langParser.ArrayContext(self, localctx)
+                localctx = pawtonParser.ArrayContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 25
-                self.match(langParser.ARRAY)
+                self.match(pawtonParser.ARRAY)
                 self.state = 26
-                self.match(langParser.ID)
+                self.match(pawtonParser.ID)
                 self.state = 27
-                self.match(langParser.T__1)
+                self.match(pawtonParser.T__1)
                 self.state = 29
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==11:
                     self.state = 28
-                    self.match(langParser.INT)
+                    self.match(pawtonParser.INT)
 
 
                 self.state = 31
-                self.match(langParser.T__2)
+                self.match(pawtonParser.T__2)
                 self.state = 44
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==1:
                     self.state = 32
-                    self.match(langParser.T__0)
+                    self.match(pawtonParser.T__0)
                     self.state = 33
-                    self.match(langParser.T__3)
+                    self.match(pawtonParser.T__3)
                     self.state = 34
                     self.expr()
                     self.state = 39
@@ -412,7 +412,7 @@ class langParser ( Parser ):
                     _la = self._input.LA(1)
                     while _la==5:
                         self.state = 35
-                        self.match(langParser.T__4)
+                        self.match(pawtonParser.T__4)
                         self.state = 36
                         self.expr()
                         self.state = 41
@@ -420,7 +420,7 @@ class langParser ( Parser ):
                         _la = self._input.LA(1)
 
                     self.state = 42
-                    self.match(langParser.T__5)
+                    self.match(pawtonParser.T__5)
 
 
                 pass
@@ -444,7 +444,7 @@ class langParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return langParser.RULE_expr
+            return pawtonParser.RULE_expr
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -454,12 +454,12 @@ class langParser ( Parser ):
 
     class StringExprContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def STRING(self):
-            return self.getToken(langParser.STRING, 0)
+            return self.getToken(pawtonParser.STRING, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterStringExpr" ):
@@ -478,14 +478,14 @@ class langParser ( Parser ):
 
     class ArrayElemContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ID(self):
-            return self.getToken(langParser.ID, 0)
+            return self.getToken(pawtonParser.ID, 0)
         def INT(self):
-            return self.getToken(langParser.INT, 0)
+            return self.getToken(pawtonParser.INT, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterArrayElem" ):
@@ -504,20 +504,20 @@ class langParser ( Parser ):
 
     class MulDivContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def value(self):
-            return self.getTypedRuleContext(langParser.ValueContext,0)
+            return self.getTypedRuleContext(pawtonParser.ValueContext,0)
 
         def expr(self):
-            return self.getTypedRuleContext(langParser.ExprContext,0)
+            return self.getTypedRuleContext(pawtonParser.ExprContext,0)
 
         def MULT(self):
-            return self.getToken(langParser.MULT, 0)
+            return self.getToken(pawtonParser.MULT, 0)
         def DIVIDE(self):
-            return self.getToken(langParser.DIVIDE, 0)
+            return self.getToken(pawtonParser.DIVIDE, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterMulDiv" ):
@@ -536,20 +536,20 @@ class langParser ( Parser ):
 
     class AddSubContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def value(self):
-            return self.getTypedRuleContext(langParser.ValueContext,0)
+            return self.getTypedRuleContext(pawtonParser.ValueContext,0)
 
         def expr(self):
-            return self.getTypedRuleContext(langParser.ExprContext,0)
+            return self.getTypedRuleContext(pawtonParser.ExprContext,0)
 
         def ADD(self):
-            return self.getToken(langParser.ADD, 0)
+            return self.getToken(pawtonParser.ADD, 0)
         def SUBSTRACT(self):
-            return self.getToken(langParser.SUBSTRACT, 0)
+            return self.getToken(pawtonParser.SUBSTRACT, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterAddSub" ):
@@ -568,12 +568,12 @@ class langParser ( Parser ):
 
     class ValExprContext(ExprContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ExprContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ExprContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def value(self):
-            return self.getTypedRuleContext(langParser.ValueContext,0)
+            return self.getTypedRuleContext(pawtonParser.ValueContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -594,7 +594,7 @@ class langParser ( Parser ):
 
     def expr(self):
 
-        localctx = langParser.ExprContext(self, self._ctx, self.state)
+        localctx = pawtonParser.ExprContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_expr)
         self._la = 0 # Token type
         try:
@@ -602,7 +602,7 @@ class langParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,7,self._ctx)
             if la_ == 1:
-                localctx = langParser.MulDivContext(self, localctx)
+                localctx = pawtonParser.MulDivContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 48
                 self.value()
@@ -618,7 +618,7 @@ class langParser ( Parser ):
                 pass
 
             elif la_ == 2:
-                localctx = langParser.AddSubContext(self, localctx)
+                localctx = pawtonParser.AddSubContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 52
                 self.value()
@@ -634,34 +634,34 @@ class langParser ( Parser ):
                 pass
 
             elif la_ == 3:
-                localctx = langParser.ValExprContext(self, localctx)
+                localctx = pawtonParser.ValExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 56
                 self.value()
                 pass
 
             elif la_ == 4:
-                localctx = langParser.StringExprContext(self, localctx)
+                localctx = pawtonParser.StringExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 57
-                self.match(langParser.STRING)
+                self.match(pawtonParser.STRING)
                 pass
 
             elif la_ == 5:
-                localctx = langParser.ArrayElemContext(self, localctx)
+                localctx = pawtonParser.ArrayElemContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 58
-                self.match(langParser.ID)
+                self.match(pawtonParser.ID)
                 self.state = 62
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if _la==2:
                     self.state = 59
-                    self.match(langParser.T__1)
+                    self.match(pawtonParser.T__1)
                     self.state = 60
-                    self.match(langParser.INT)
+                    self.match(pawtonParser.INT)
                     self.state = 61
-                    self.match(langParser.T__2)
+                    self.match(pawtonParser.T__2)
 
 
                 pass
@@ -685,7 +685,7 @@ class langParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return langParser.RULE_value
+            return pawtonParser.RULE_value
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -695,12 +695,12 @@ class langParser ( Parser ):
 
     class FloatExprContext(ValueContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ValueContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ValueContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def FLOAT(self):
-            return self.getToken(langParser.FLOAT, 0)
+            return self.getToken(pawtonParser.FLOAT, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterFloatExpr" ):
@@ -719,12 +719,12 @@ class langParser ( Parser ):
 
     class VarExprContext(ValueContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ValueContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ValueContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def ID(self):
-            return self.getToken(langParser.ID, 0)
+            return self.getToken(pawtonParser.ID, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterVarExpr" ):
@@ -743,12 +743,12 @@ class langParser ( Parser ):
 
     class IntExprContext(ValueContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ValueContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ValueContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def INT(self):
-            return self.getToken(langParser.INT, 0)
+            return self.getToken(pawtonParser.INT, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterIntExpr" ):
@@ -767,14 +767,14 @@ class langParser ( Parser ):
 
     class CastToFloatContext(ValueContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ValueContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ValueContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def TOFLOAT(self):
-            return self.getToken(langParser.TOFLOAT, 0)
+            return self.getToken(pawtonParser.TOFLOAT, 0)
         def value(self):
-            return self.getTypedRuleContext(langParser.ValueContext,0)
+            return self.getTypedRuleContext(pawtonParser.ValueContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -794,14 +794,14 @@ class langParser ( Parser ):
 
     class CastToIntContext(ValueContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ValueContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ValueContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def TOINT(self):
-            return self.getToken(langParser.TOINT, 0)
+            return self.getToken(pawtonParser.TOINT, 0)
         def value(self):
-            return self.getTypedRuleContext(langParser.ValueContext,0)
+            return self.getTypedRuleContext(pawtonParser.ValueContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
@@ -821,17 +821,17 @@ class langParser ( Parser ):
 
     class ParenExprContext(ValueContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a langParser.ValueContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a pawtonParser.ValueContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def LP(self):
-            return self.getToken(langParser.LP, 0)
+            return self.getToken(pawtonParser.LP, 0)
         def expr(self):
-            return self.getTypedRuleContext(langParser.ExprContext,0)
+            return self.getTypedRuleContext(pawtonParser.ExprContext,0)
 
         def RP(self):
-            return self.getToken(langParser.RP, 0)
+            return self.getToken(pawtonParser.RP, 0)
 
         def enterRule(self, listener:ParseTreeListener):
             if hasattr( listener, "enterParenExpr" ):
@@ -851,55 +851,55 @@ class langParser ( Parser ):
 
     def value(self):
 
-        localctx = langParser.ValueContext(self, self._ctx, self.state)
+        localctx = pawtonParser.ValueContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_value)
         try:
             self.state = 77
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [11]:
-                localctx = langParser.IntExprContext(self, localctx)
+                localctx = pawtonParser.IntExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 66
-                self.match(langParser.INT)
+                self.match(pawtonParser.INT)
                 pass
             elif token in [12]:
-                localctx = langParser.FloatExprContext(self, localctx)
+                localctx = pawtonParser.FloatExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 67
-                self.match(langParser.FLOAT)
+                self.match(pawtonParser.FLOAT)
                 pass
             elif token in [10]:
-                localctx = langParser.VarExprContext(self, localctx)
+                localctx = pawtonParser.VarExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 68
-                self.match(langParser.ID)
+                self.match(pawtonParser.ID)
                 pass
             elif token in [14]:
-                localctx = langParser.CastToIntContext(self, localctx)
+                localctx = pawtonParser.CastToIntContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 69
-                self.match(langParser.TOINT)
+                self.match(pawtonParser.TOINT)
                 self.state = 70
                 self.value()
                 pass
             elif token in [15]:
-                localctx = langParser.CastToFloatContext(self, localctx)
+                localctx = pawtonParser.CastToFloatContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 71
-                self.match(langParser.TOFLOAT)
+                self.match(pawtonParser.TOFLOAT)
                 self.state = 72
                 self.value()
                 pass
             elif token in [16]:
-                localctx = langParser.ParenExprContext(self, localctx)
+                localctx = pawtonParser.ParenExprContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
                 self.state = 73
-                self.match(langParser.LP)
+                self.match(pawtonParser.LP)
                 self.state = 74
                 self.expr()
                 self.state = 75
-                self.match(langParser.RP)
+                self.match(pawtonParser.RP)
                 pass
             else:
                 raise NoViableAltException(self)
