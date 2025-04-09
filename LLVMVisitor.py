@@ -63,7 +63,6 @@ class LLVMVisitor(langVisitor):
     def visitRead(self, ctx):
         var_name = ctx.ID().getText()
 
-        # Domyślnie alokuj int, jeśli zmienna nie istnieje
         ptr = self.variables.get(var_name)
         if ptr is None:
             ptr = self.builder.alloca(ir.IntType(32), name=var_name)
@@ -145,20 +144,36 @@ class LLVMVisitor(langVisitor):
 
     def visitArray(self, ctx):
         array_name = ctx.ID().getText()
-        elements = [self.visit(expr) for expr in ctx.expr()]
-        array_size = len(elements)
-        element_type = elements[0].type
+        exprs = ctx.expr()
 
-        allowed_types = (ir.IntType(32), ir.DoubleType(), ir.IntType(8).as_pointer())
-        if not isinstance(element_type, type) and element_type not in allowed_types:
-            raise Exception(f"Nieobsługiwany typ tablicy: {element_type}")
+        elements = []
+        element_type = None
 
+        for expr in exprs:
+            val = self.visit(expr)
 
-        array_type = ir.ArrayType(element_type, array_size)
+            if isinstance(val.type, ir.PointerType) and val.type.pointee == ir.IntType(8):
+                text = expr.getText().strip('"') + "\0"
+                name = f"str_{self.string_counter}"
+                self.string_counter += 1
+                arr_type = ir.ArrayType(ir.IntType(8), len(text))
+                global_str = ir.GlobalVariable(self.module, arr_type, name=name)
+                global_str.global_constant = True
+                global_str.initializer = ir.Constant(arr_type, bytearray(text.encode("utf8")))
+
+                gep = global_str.gep([ir.Constant(ir.IntType(32), 0), ir.Constant(ir.IntType(32), 0)])
+                elements.append(gep)
+                element_type = gep.type
+            else:
+                elements.append(val)
+                element_type = val.type
+
+        array_type = ir.ArrayType(element_type, len(elements))
         initializer = ir.Constant(array_type, elements)
         global_array = ir.GlobalVariable(self.module, array_type, name=array_name)
-        global_array.initializer = initializer
         global_array.global_constant = True
+        global_array.initializer = initializer
+
         self.variables[array_name] = global_array
         return global_array
 
