@@ -1,4 +1,4 @@
-grammar lang;
+grammar pawton;
 
 prog: ( stat? NEWLINE )*;
 

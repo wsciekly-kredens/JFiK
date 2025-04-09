@@ -1,7 +1,7 @@
-from langVisitor import langVisitor
+from pawtonVisitor import pawtonVisitor
 from llvmlite import ir
 
-class LLVMVisitor(langVisitor):
+class LLVMVisitor(pawtonVisitor):
     def __init__(self):
         self.module = ir.Module(name="main")
         func_type = ir.FunctionType(ir.VoidType(), [])

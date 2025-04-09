@@ -1,4 +1,4 @@
-# Generated from lang.g4 by ANTLR 4.13.2
+# Generated from pawton.g4 by ANTLR 4.13.2
 from antlr4 import *
 from io import StringIO
 import sys
@@ -62,7 +62,7 @@ def serializedATN():
         1,6,0,0
     ]
 
-class langLexer(Lexer):
+class pawtonLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -111,7 +111,7 @@ class langLexer(Lexer):
                   "TOFLOAT", "LP", "RP", "ADD", "SUBSTRACT", "MULT", "DIVIDE", 
                   "NEWLINE", "WS" ]
 
-    grammarFileName = "lang.g4"
+    grammarFileName = "pawton.g4"
 
     def __init__(self, input=None, output:TextIO = sys.stdout):
         super().__init__(input, output)
