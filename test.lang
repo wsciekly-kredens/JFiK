@@ -5,5 +5,5 @@ pack Dognames[] = {"Thommas Schelby", "Pies", "Dumpling"}
 b = "Azor"
 bark b
 bark Dognames[2]
-pack Age[2] = {1, 2}
+pack Age[] = {1, 20}
 bark Age[1]
