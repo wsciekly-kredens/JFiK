@@ -1,6 +1,7 @@
 from pawtonVisitor import pawtonVisitor
 from llvmlite import ir
 
+
 class LLVMVisitor(pawtonVisitor):
     def __init__(self):
         self.module = ir.Module(name="main")
@@ -47,7 +48,11 @@ class LLVMVisitor(pawtonVisitor):
         self.variables[var_name] = ptr
 
     def visitWrite(self, ctx):
-        val = self.visit(ctx.expr())
+        try:
+            val = self.visit(ctx.expr())
+        except Exception as e:
+            print(f"Błąd: {e}")
+            exit()
         if val.type == ir.IntType(32):
             fmt_ptr = self.builder.bitcast(self._fmt_int, ir.IntType(8).as_pointer())
             self.builder.call(self.printf, [fmt_ptr, val])
@@ -82,6 +87,8 @@ class LLVMVisitor(pawtonVisitor):
     def visitVarExpr(self, ctx):
         var_name = ctx.ID().getText()
         ptr = self.variables.get(var_name)
+        if ptr is None:
+            raise Exception(f"Zmienna '{var_name}' nie została zadeklarowana ani przypisana.")
         return self.builder.load(ptr, var_name)
 
     def visitIntExpr(self, ctx):

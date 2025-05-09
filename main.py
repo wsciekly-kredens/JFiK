@@ -28,7 +28,7 @@ def compile_lang_code(source_code):
 
     visitor = LLVMVisitor()
     module = visitor.visit(tree)
-    with open("output.ll", "wb") as f:
+    with open("out.ll", "wb") as f:
         f.write(str(module).encode("utf-8"))
         f.close()
 
