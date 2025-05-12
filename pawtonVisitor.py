@@ -39,6 +39,16 @@ class pawtonVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by pawtonParser#funcDef.
+    def visitFuncDef(self, ctx:pawtonParser.FuncDefContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by pawtonParser#funcCall.
+    def visitFuncCall(self, ctx:pawtonParser.FuncCallContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by pawtonParser#MulDiv.
     def visitMulDiv(self, ctx:pawtonParser.MulDivContext):
         return self.visitChildren(ctx)
@@ -91,6 +101,11 @@ class pawtonVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by pawtonParser#ParenExpr.
     def visitParenExpr(self, ctx:pawtonParser.ParenExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by pawtonParser#block.
+    def visitBlock(self, ctx:pawtonParser.BlockContext):
         return self.visitChildren(ctx)
 
 

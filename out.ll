@@ -5,40 +5,38 @@ target datalayout = ""
 define void @"main"()
 {
 entry:
-  %".2" = sitofp i32 3 to double
-  %".3" = fadd double 0x4014666666666666, %".2"
-  %"a" = alloca double
-  store double %".3", double* %"a"
-  %"a.1" = load double, double* %"a"
-  %".5" = bitcast [4 x i8]* @"fmt_float" to i8*
-  %".6" = call i32 (i8*, ...) @"printf"(i8* %".5", double %"a.1")
-  %".7" = sitofp i32 3 to double
-  %".8" = fdiv double 0x4014666666666666, %".7"
-  %".9" = bitcast [4 x i8]* @"fmt_float" to i8*
-  %".10" = call i32 (i8*, ...) @"printf"(i8* %".9", double %".8")
-  %".11" = bitcast [16 x i8]* @"str_0" to i8*
-  %".12" = bitcast [5 x i8]* @"str_2" to i8*
-  %".13" = bitcast [9 x i8]* @"str_4" to i8*
-  %".14" = bitcast [6 x i8]* @"str_6" to i8*
-  %"b" = alloca i8*
-  store i8* %".14", i8** %"b"
-  %"b.1" = load i8*, i8** %"b"
-  %".16" = bitcast [4 x i8]* @"fmt_string" to i8*
-  %".17" = call i32 (i8*, ...) @"printf"(i8* %".16", i8* %"b.1")
-  %".18" = getelementptr [3 x i8*], [3 x i8*]* @"Dognames", i32 0, i32 2
-  %".19" = load i8*, i8** %".18"
-  %".20" = bitcast [4 x i8]* @"fmt_string" to i8*
-  %".21" = call i32 (i8*, ...) @"printf"(i8* %".20", i8* %".19")
-  %".22" = getelementptr [2 x i32], [2 x i32]* @"Age", i32 0, i32 1
-  %".23" = load i32, i32* %".22"
-  %".24" = bitcast [4 x i8]* @"fmt_int" to i8*
-  %".25" = call i32 (i8*, ...) @"printf"(i8* %".24", i32 %".23")
-  %"d" = alloca i32
-  %".26" = bitcast [3 x i8]* @"fmt_scanf_int" to i8*
-  %".27" = call i32 (i8*, ...) @"scanf"(i8* %".26", i32* %"d")
-  %"d.1" = load i32, i32* %"d"
-  %".28" = bitcast [4 x i8]* @"fmt_int" to i8*
-  %".29" = call i32 (i8*, ...) @"printf"(i8* %".28", i32 %"d.1")
+  %".2" = add i32 5, 3
+  store i32 %".2", i32* @"a"
+  %"a" = load i32, i32* @"a"
+  %".4" = bitcast [4 x i8]* @"fmt_int" to i8*
+  %".5" = call i32 (i8*, ...) @"printf"(i8* %".4", i32 %"a")
+  %".6" = sitofp i32 3 to double
+  %".7" = fdiv double 0x4014666666666666, %".6"
+  %".8" = bitcast [4 x i8]* @"fmt_float" to i8*
+  %".9" = call i32 (i8*, ...) @"printf"(i8* %".8", double %".7")
+  %".10" = bitcast [16 x i8]* @"str_0" to i8*
+  %".11" = bitcast [5 x i8]* @"str_2" to i8*
+  %".12" = bitcast [9 x i8]* @"str_4" to i8*
+  %".13" = bitcast [6 x i8]* @"str_6" to i8*
+  store i8* %".13", i8** @"b"
+  %"b" = load i8*, i8** @"b"
+  %".15" = bitcast [4 x i8]* @"fmt_string" to i8*
+  %".16" = call i32 (i8*, ...) @"printf"(i8* %".15", i8* %"b")
+  %".17" = bitcast [5 x i8]* @"str_7" to i8*
+  store i8* %".17", i8** @"b"
+  %"b.1" = load i8*, i8** @"b"
+  %".19" = bitcast [4 x i8]* @"fmt_string" to i8*
+  %".20" = call i32 (i8*, ...) @"printf"(i8* %".19", i8* %"b.1")
+  %".21" = getelementptr [3 x i8*], [3 x i8*]* @"Dognames", i32 0, i32 2
+  %".22" = load i8*, i8** %".21"
+  %".23" = bitcast [4 x i8]* @"fmt_string" to i8*
+  %".24" = call i32 (i8*, ...) @"printf"(i8* %".23", i8* %".22")
+  %".25" = getelementptr [2 x i32], [2 x i32]* @"Age", i32 0, i32 1
+  %".26" = load i32, i32* %".25"
+  %".27" = bitcast [4 x i8]* @"fmt_int" to i8*
+  %".28" = call i32 (i8*, ...) @"printf"(i8* %".27", i32 %".26")
+  store i32 1, i32* @"z"
+  call void @"greet"(double 0x4000cccccccccccd, i32 4)
   ret void
 }
 
@@ -51,6 +49,7 @@ declare i32 @"scanf"(i8* %".1", ...)
 
 @"fmt_scanf_int" = constant [3 x i8] c"%d\00"
 @"fmt_scanf_float" = constant [4 x i8] c"%lf\00"
+@"a" = common global i32 0, align 4
 @"str_0" = constant [16 x i8] c"Thommas Schelby\00"
 @"str_1" = constant [16 x i8] c"Thommas Schelby\00"
 @"str_2" = constant [5 x i8] c"Pies\00"
@@ -59,4 +58,25 @@ declare i32 @"scanf"(i8* %".1", ...)
 @"str_5" = constant [9 x i8] c"Dumpling\00"
 @"Dognames" = constant [3 x i8*] [i8* getelementptr ([16 x i8], [16 x i8]* @"str_1", i32 0, i32 0), i8* getelementptr ([5 x i8], [5 x i8]* @"str_3", i32 0, i32 0), i8* getelementptr ([9 x i8], [9 x i8]* @"str_5", i32 0, i32 0)]
 @"str_6" = constant [6 x i8] c"Tomek\00"
+@"b" = common global i8* null, align 4
+@"str_7" = constant [5 x i8] c"Asia\00"
 @"Age" = constant [2 x i32] [i32 1, i32 20]
+@"z" = common global i32 0, align 4
+define void @"greet"(double %"c", i32 %"d")
+{
+entry:
+  %"c.1" = alloca double
+  store double %"c", double* %"c.1"
+  %"d.1" = alloca i32
+  store i32 %"d", i32* %"d.1"
+  %"z" = load i32, i32* @"z"
+  %".6" = bitcast [4 x i8]* @"fmt_int" to i8*
+  %".7" = call i32 (i8*, ...) @"printf"(i8* %".6", i32 %"z")
+  %"c.2" = load double, double* %"c.1"
+  %"d.2" = load i32, i32* %"d.1"
+  %".8" = sitofp i32 %"d.2" to double
+  %".9" = fadd double %"c.2", %".8"
+  %".10" = bitcast [4 x i8]* @"fmt_float" to i8*
+  %".11" = call i32 (i8*, ...) @"printf"(i8* %".10", double %".9")
+  ret void
+}

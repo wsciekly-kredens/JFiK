@@ -26,6 +26,13 @@ class LLVMVisitor(pawtonVisitor):
         self._fmt_scanf_int = self._create_global_fmt_str("%d\0", "fmt_scanf_int")
         self._fmt_scanf_float = self._create_global_fmt_str("%lf\0", "fmt_scanf_float")
 
+        self.functions = {}
+        self.function_types = {}
+        self.function_definitions = {}
+
+        self.global_variables = {}
+        self.local_variables_stack = []
+
 
     def _create_global_fmt_str(self, text, name):
         arr_type = ir.ArrayType(ir.IntType(8), len(text))
@@ -33,6 +40,37 @@ class LLVMVisitor(pawtonVisitor):
         global_var.global_constant = True
         global_var.initializer = ir.Constant(arr_type, bytearray(text.encode("utf8")))
         return global_var
+
+    def _generate_function_body(self, function, func_ctx, param_names, param_types):
+        saved_builder = self.builder
+        saved_variables = self.variables.copy()
+
+        entry_block = function.append_basic_block(name="entry")
+        self.builder = ir.IRBuilder(entry_block)
+
+        function_scope = {}
+        self.local_variables_stack.append(function_scope)
+        self.variables = function_scope
+
+        for i, arg in enumerate(function.args):
+            arg_llvm_type = param_types[i]
+            arg_name = param_names[i]
+            arg.name = arg_name
+
+            ptr = self.builder.alloca(arg_llvm_type, name=arg_name)
+            self.builder.store(arg, ptr)
+            self.variables[arg_name] = ptr
+
+        self.visit(func_ctx.block())
+
+        if not self.builder.block.is_terminated:
+            self.builder.ret_void()
+
+
+        self.builder = saved_builder
+        self.variables = saved_variables
+        self.local_variables_stack.pop()
+        self.variables = self.local_variables_stack[-1] if self.local_variables_stack else {}
 
     def visitProg(self, ctx):
         for stat in ctx.stat():
@@ -43,9 +81,23 @@ class LLVMVisitor(pawtonVisitor):
     def visitAssign(self, ctx):
         var_name = ctx.ID().getText()
         value = self.visit(ctx.expr())
-        ptr = self.builder.alloca(value.type, name=var_name)
-        self.builder.store(value, ptr)
-        self.variables[var_name] = ptr
+
+        if self.local_variables_stack:
+            ptr = self.builder.alloca(value.type, name=var_name)
+            self.builder.store(value, ptr)
+            self.variables[var_name] = ptr
+        else:
+            existing_global_var = self.global_variables.get(var_name)
+
+            if existing_global_var:
+                self.builder.store(value, existing_global_var)
+            else:
+                global_var = ir.GlobalVariable(self.module, value.type, name=var_name)
+                global_var.initializer = ir.Constant(value.type, None)
+                global_var.linkage = 'common'
+                global_var.align = 4
+                self.builder.store(value, global_var)
+                self.global_variables[var_name] = global_var
 
     def visitWrite(self, ctx):
         try:
@@ -86,17 +138,23 @@ class LLVMVisitor(pawtonVisitor):
 
     def visitVarExpr(self, ctx):
         var_name = ctx.ID().getText()
+
         ptr = self.variables.get(var_name)
-        if ptr is None:
-            raise Exception(f"Zmienna '{var_name}' nie została zadeklarowana ani przypisana.")
-        return self.builder.load(ptr, var_name)
+        if ptr is not None:
+            return self.builder.load(ptr, var_name)
+
+        global_ptr = self.global_variables.get(var_name)
+        if global_ptr is not None:
+            return self.builder.load(global_ptr, var_name)
+
+        raise Exception(f"Zmienna '{var_name}' nie została zadeklarowana ani przypisana.")
 
     def visitIntExpr(self, ctx):
         return ir.Constant(ir.IntType(32), int(ctx.INT().getText()))
 
     def visitFloatExpr(self, ctx):
         return ir.Constant(ir.DoubleType(), float(ctx.FLOAT().getText()))
-    
+
     def visitStringExpr(self, ctx):
         text = ctx.STRING().getText().strip('"')
         text += "\0"
@@ -152,7 +210,7 @@ class LLVMVisitor(pawtonVisitor):
     def visitArray(self, ctx):
         array_name = ctx.ID().getText()
         exprs = ctx.expr()
-        
+
         if not exprs:
             raise Exception(f"Tablica '{array_name}' nie zawiera żadnych elementów.")
 
@@ -234,3 +292,63 @@ class LLVMVisitor(pawtonVisitor):
             [ir.Constant(ir.IntType(32), 0), ir.Constant(ir.IntType(32), index)],
         )
         return self.builder.load(element_ptr)
+
+
+    def visitFuncDef(self, ctx):
+        func_name = ctx.ID(0).getText()
+        if func_name in self.function_definitions:
+            print(f"Ostrzeżenie: Redefinicja funkcji '{func_name}'.")
+        self.function_definitions[func_name] = ctx
+
+    def visitFuncCall(self, ctx):
+        func_name = ctx.ID().getText()
+
+        args = []
+        arg_types = []
+        if ctx.expr():
+            for expr in ctx.expr():
+                val = self.visit(expr)
+                if not isinstance(val.type, (ir.IntType, ir.DoubleType, ir.PointerType)):
+                    if isinstance(val.type, ir.PointerType):
+                        if not isinstance(val.type.pointee, ir.IntType) or val.type.pointee.width != 8:
+                            raise Exception(
+                                f"Niedozwolony typ wskaźnika '{val.type}' jako argument funkcji '{func_name}'. Dozwolony tylko i8* (string).")
+                    else:
+                        raise Exception(
+                            f"Niedozwolony typ argumentu '{val.type}' dla funkcji '{func_name}'. Dozwolone int, float, string.")
+
+                args.append(val)
+                arg_types.append(val.type)
+
+        llvm_func = self.functions.get(func_name)
+
+        if llvm_func:
+            expected_types = self.function_types[func_name].args
+            if len(args) != len(expected_types):
+                raise Exception(
+                    f"Zła liczba argumentów dla funkcji '{func_name}'. Oczekiwano {len(expected_types)}, podano {len(args)}.")
+
+            for i, (arg, exp_type) in enumerate(zip(args, expected_types)):
+                if arg.type != exp_type:
+                    raise Exception(
+                        f"Niezgodność typu argumentu {i + 1} w wywołaniu funkcji '{func_name}'. Oczekiwano {exp_type}, podano {arg.type}.")
+        else:
+            func_def_ctx = self.function_definitions.get(func_name)
+            if func_def_ctx is None:
+                raise Exception(f"Funkcja '{func_name}' nie została zdefiniowana przed wywołaniem.")
+
+            param_names = [id.getText() for id in func_def_ctx.ID()[1:]]
+            if len(param_names) != len(arg_types):
+                raise Exception(
+                    f"Definicja funkcji '{func_name}' oczekuje {len(param_names)} parametrów, a wywołanie dostarczyło {len(arg_types)}.")
+
+
+            func_type = ir.FunctionType(ir.VoidType(), arg_types)
+            llvm_func = ir.Function(self.module, func_type, name=func_name)
+
+            self.functions[func_name] = llvm_func
+            self.function_types[func_name] = func_type
+
+            self._generate_function_body(llvm_func, func_def_ctx, param_names, arg_types)
+
+        return self.builder.call(llvm_func, args)

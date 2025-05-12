@@ -62,6 +62,24 @@ class pawtonListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by pawtonParser#funcDef.
+    def enterFuncDef(self, ctx:pawtonParser.FuncDefContext):
+        pass
+
+    # Exit a parse tree produced by pawtonParser#funcDef.
+    def exitFuncDef(self, ctx:pawtonParser.FuncDefContext):
+        pass
+
+
+    # Enter a parse tree produced by pawtonParser#funcCall.
+    def enterFuncCall(self, ctx:pawtonParser.FuncCallContext):
+        pass
+
+    # Exit a parse tree produced by pawtonParser#funcCall.
+    def exitFuncCall(self, ctx:pawtonParser.FuncCallContext):
+        pass
+
+
     # Enter a parse tree produced by pawtonParser#MulDiv.
     def enterMulDiv(self, ctx:pawtonParser.MulDivContext):
         pass
@@ -158,6 +176,15 @@ class pawtonListener(ParseTreeListener):
 
     # Exit a parse tree produced by pawtonParser#ParenExpr.
     def exitParenExpr(self, ctx:pawtonParser.ParenExprContext):
+        pass
+
+
+    # Enter a parse tree produced by pawtonParser#block.
+    def enterBlock(self, ctx:pawtonParser.BlockContext):
+        pass
+
+    # Exit a parse tree produced by pawtonParser#block.
+    def exitBlock(self, ctx:pawtonParser.BlockContext):
         pass
 
 
