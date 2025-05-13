@@ -15,3 +15,11 @@ command greet (c, d) {
     bark c + d
 }
 greet(2.1, 4)
+pivot (i = 0; i < 3; i = i + 1) {
+    bark b
+}
+if (a < 3) {
+    bark Dognames[2]
+} else {
+    bark Dognames[0]
+}
