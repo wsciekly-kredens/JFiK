@@ -1,10 +1,17 @@
-a = 5.1 + 3
+a = 5 + 3
 bark a
 bark 5.1 / 3
 pack Dognames[] = {"Thommas Schelby", "Pies", "Dumpling"}
 b = "Tomek"
 bark b
+b = "Asia"
+bark b
 bark Dognames[2]
 pack Age[] = {1, 20}
 bark Age[1]
-bark d
+z = 1
+command greet (c, d) {
+    bark z
+    bark c + d
+}
+greet(2.1, 4)

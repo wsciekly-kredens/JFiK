@@ -7,6 +7,8 @@ stat:   WRITE expr        #write
     |   READ ID           #read
     |   expr              #exprStat
     |   ARRAY ID '[' (INT)? ']' ('=' '{' expr (',' expr)* '}' )?  #array
+    |   FUNC ID LP (ID (',' ID)*)? RP block   #funcDef
+    |   ID LP (expr (',' expr)*)? RP          #funcCall
     ;
 
 expr:   value (MULT | DIVIDE) expr    #MulDiv
@@ -22,13 +24,15 @@ value:  INT                          #intExpr
     |   TOINT value                   #CastToInt
     |   TOFLOAT value                 #CastToFloat
     |   LP expr RP                   #ParenExpr
-
     ;
+
+block: '{' (stat? NEWLINE)* '}';
 
 
 WRITE:  'bark';
 READ:   'listen';
 ARRAY:  'pack';
+FUNC: 'command';
 
 ID:   ('a'..'z'|'A'..'Z')+;
 INT:  '0'..'9'+;
