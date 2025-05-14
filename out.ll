@@ -37,6 +37,40 @@ entry:
   %".28" = call i32 (i8*, ...) @"printf"(i8* %".27", i32 %".26")
   store i32 1, i32* @"z"
   call void @"greet"(double 0x4000cccccccccccd, i32 4)
+  %"i" = alloca i32
+  store i32 0, i32* %"i"
+  br label %"for.cond"
+for.cond:
+  %"i.1" = load i32, i32* %"i"
+  %".33" = icmp slt i32 %"i.1", 3
+  br i1 %".33", label %"for.body", label %"for.end"
+for.body:
+  %"b.2" = load i8*, i8** @"b"
+  %".35" = bitcast [4 x i8]* @"fmt_string" to i8*
+  %".36" = call i32 (i8*, ...) @"printf"(i8* %".35", i8* %"b.2")
+  br label %"for.inc"
+for.inc:
+  %"i.2" = load i32, i32* %"i"
+  %".38" = add i32 %"i.2", 1
+  store i32 %".38", i32* %"i"
+  br label %"for.cond"
+for.end:
+  %"a.1" = load i32, i32* @"a"
+  %".41" = icmp slt i32 %"a.1", 3
+  br i1 %".41", label %"if.then", label %"if.else"
+if.then:
+  %".43" = getelementptr [3 x i8*], [3 x i8*]* @"Dognames", i32 0, i32 2
+  %".44" = load i8*, i8** %".43"
+  %".45" = bitcast [4 x i8]* @"fmt_string" to i8*
+  %".46" = call i32 (i8*, ...) @"printf"(i8* %".45", i8* %".44")
+  br label %"if.end"
+if.else:
+  %".48" = getelementptr [3 x i8*], [3 x i8*]* @"Dognames", i32 0, i32 0
+  %".49" = load i8*, i8** %".48"
+  %".50" = bitcast [4 x i8]* @"fmt_string" to i8*
+  %".51" = call i32 (i8*, ...) @"printf"(i8* %".50", i8* %".49")
+  br label %"if.end"
+if.end:
   ret void
 }
 

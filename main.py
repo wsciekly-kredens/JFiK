@@ -5,6 +5,7 @@ from pawtonParser import pawtonParser
 from LLVMVisitor import LLVMVisitor
 from langErrorListener import LangErrorListener
 
+
 def compile_lang_code(source_code):
     input_stream = InputStream(source_code)
 
@@ -31,6 +32,7 @@ def compile_lang_code(source_code):
     with open("out.ll", "wb") as f:
         f.write(str(module).encode("utf-8"))
         f.close()
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
